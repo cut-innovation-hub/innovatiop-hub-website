@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
@@ -11,7 +12,7 @@ import DashboardSidebarLink from "../links/DashboardSidebarLink";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const navigation = [
-  { name: "Home", href: "/", icon: HomeIcon, current: false },
+  { name: "Home", href: "/dashboard", icon: HomeIcon, current: false },
   {
     name: "Companies",
     href: "/dashboard/companies",
@@ -87,7 +88,7 @@ function DashboardSidebar({ sidebarOpen, setSidebarOpen }: Props) {
                 </div>
               </Transition.Child>
               <div
-                onClick={() => router("/")}
+                onClick={() => router("/dashboard")}
                 className="cursor pointer flex-shrink-0 flex items-center px-4"
               >
                 <div className="relative self-center mx-auto h-32 w-32 my-4">
