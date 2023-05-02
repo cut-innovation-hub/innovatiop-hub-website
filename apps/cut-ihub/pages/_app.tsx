@@ -1,6 +1,7 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import "./styles.css";
+import { ChakraProvider } from '@chakra-ui/react'
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
@@ -9,7 +10,9 @@ function CustomApp({ Component, pageProps }: AppProps) {
         <title>Welcome to cut-ihub!</title>
       </Head>
       <main className="app">
+        <ChakraProvider>
         <Component {...pageProps} />
+        </ChakraProvider>
       </main>
     </>
   );
