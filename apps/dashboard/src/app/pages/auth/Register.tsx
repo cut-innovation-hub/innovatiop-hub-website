@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import BlueButton from '../../components/buttons/BlueButton';
 import { getMessage } from '../../utils/getMessage';
 import axios from 'axios'
+import { apiUrl } from '../../utils/apiUrl';
 
 type Props = {}
 
@@ -27,14 +28,14 @@ const Register = (props: Props) => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post(`${'apiUrl'}/api/auth/register`, {
+      const { data } = await axios.post(`${apiUrl}/auth/register`, {
         email,
         password,
         username: username,
         agreed,
       });
       //@ts-ignore
-      history(redirect || "/login");
+      history("/");
       toast({
         title: "Account created sucessfully!.",
         status: "success",
