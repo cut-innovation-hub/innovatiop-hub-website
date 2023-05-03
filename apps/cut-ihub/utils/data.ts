@@ -1,11 +1,11 @@
 import cattle_breeding from "../public/cattle-breeding.jpg";
-import cut_printing from "../public//cut-printing.jpg";
-import sanitizer_img from "../public//sanitizer.jpg";
-import cut_cloth from "../public//cut_cloth.webp";
-import digester from "../public//digester1.jpeg";
-import cut_kleen from "../public//cut-kleen.jpg";
-import cut_clo from "../public//cut-clo.jpg";
-import makeba from "../public//makena.jpeg";
+import cut_printing from "../public/cut-printing.jpg";
+import sanitizer_img from "../public/sanitizer.jpg";
+import cut_cloth from "../public/cut_cloth.webp";
+import digester from "../public/digester1.jpeg";
+import cut_kleen from "../public/cut-kleen.jpg";
+import cut_clo from "../public/cut-clo.jpg";
+import makeba from "../public/makena.jpeg";
 
 export const data = {
   nav_links: {
