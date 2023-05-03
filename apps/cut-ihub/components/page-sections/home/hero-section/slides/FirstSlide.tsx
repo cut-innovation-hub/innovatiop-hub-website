@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import hero_section from '../../../../../public/hero-section.jpg';
 
@@ -28,9 +29,9 @@ const FirstSlide = () => {
               {/* <div className="flex px-3 py-1 hover:bg-white hover:text-blue-900 text-white rounded-full border border-white font-semibold">
   Recruitment
 </div> */}
-              <div className="flex px-3 py-1 hover:bg-white hover:text-blue-900 text-white rounded-full border border-white font-semibold">
+              <Link href={'/contact'} className="flex px-3 py-1 hover:bg-white hover:text-blue-900 text-white rounded-full border border-white font-semibold">
                 Pitch An Idea
-              </div>
+              </Link>
             </div>
           </div>
         </div>

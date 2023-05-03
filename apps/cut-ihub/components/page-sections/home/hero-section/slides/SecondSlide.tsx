@@ -1,5 +1,6 @@
+import Link from 'next/link';
 import React from 'react'
-import hero_section1 from '../../../../../public/image1.jpg';
+import hero_section1 from '../../../../../public/zitf.jpg';
 
 
 function SecondSlide() {
@@ -18,21 +19,16 @@ function SecondSlide() {
       <div className="xl:max-w-3xl max-w-2xl ">
         <div className="  w-full my-auto inline-block text-white z-10 flex-col ">
           <p className="xl:text-6xl text-4xl font-extrabold ">
-            Welcome to the Chinhoyi University Innovation Hub
+            Chinhoyi Unoveristy at the Zimbabwe International Trade Fair
           </p>
           <p className="text-gray-200 pt-4">
-            Supporting innovators and entrepreneurs in transforming
-            world changing ideas into technologically feasible
-            entities/solutions of economic growth through production of
-            goods and Service
+            Chinhoyi University was awarded third place at the Zimbabwe international trade fair. The stand has lots of projects from engineering to those from the Chinhyi University Agro Industrial Park 
           </p>
           <div className="flex flex-row items-center gap-5 pt-8">
-            {/* <div className="flex px-3 py-1 hover:bg-white hover:text-blue-900 text-white rounded-full border border-white font-semibold">
-  Recruitment
-</div> */}
-            <div className="flex px-3 py-1 hover:bg-white hover:text-blue-900 text-white rounded-full border border-white font-semibold">
-              Pitch An Idea
-            </div>
+            
+            <Link href='/news' className="flex px-3 py-1 hover:bg-white hover:text-blue-900 text-white rounded-full border border-white font-semibold">
+              Read More
+            </Link>
           </div>
         </div>
       </div>

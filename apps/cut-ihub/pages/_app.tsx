@@ -7,7 +7,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <meta name="title" content="CUT Innovation Hub" />
+        <meta name="title" content="Innovation Hub" />
         <meta
           name="description"
           content="Supporting innovators and entrepreneurs in transforming world changing ideas into technologically feasible entities/solutions of economic growth through production of goods and Service. CUT Innovation Hub is more than just buildings – It is a centre for innovation and entrepreneurship The CUT Innovation Hub serves as a vehicle for ensuring the university supports the innovation and industrialization agenda of the nation by producing and supporting business ventures/ideas into viable commercializable entities (spin-off and start-up companies).We will work together to create a unique and tailored personal support plan for each individual, that outlines the type of support they receive, how much and how often."
@@ -32,7 +32,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
-        <title>CUT Innovation Hub</title>
+        <title>Innovation Hub</title>
         <link rel="shortcut icon" href={'/icon.png'} type="image/x-icon" />
       </Head>
       <main className="app">

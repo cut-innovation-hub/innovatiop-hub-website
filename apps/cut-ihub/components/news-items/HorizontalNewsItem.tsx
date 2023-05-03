@@ -14,6 +14,7 @@ function HorizontalNewsItem({}: Props) {
       <div className="col-span-2 overflow-hidden relative">
         <Image
           src={makena}
+          layout="fill"
           alt=""
           className="w-full h-full absolute object-cover"
         />
