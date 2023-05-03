@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import { Link } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
 type Props = {};
@@ -17,9 +18,9 @@ const Companies = (props: Props) => {
             Add Company
           </div>
         </div>
-        <div className="py-8">
+        <Link to='/dashboard/create-company' className="py-8">
           <p className="text-slate-900 font-semibold text-lg">All Companies</p>
-        </div>
+        </Link>
       </div>
     </DashboardLayout>
   );
