@@ -29,9 +29,9 @@ const Companies = (props: Props) => {
             Add Company
           </Link>
         </div>
-        <div className="py-8 flex flex-col gap-8 mt-8 bg-gray-300">
+        <div className="py-8 flex flex-col gap-8 mt-8 bg-gray-200">
           <p className="text-slate-900 font-semibold text-lg text-center mt-3 mb-3">
-            All News
+            All Companies
           </p>
           {/**Companies Component */}
           {/**News Component */}
