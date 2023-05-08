@@ -15,7 +15,7 @@ const NewsItem = ({ date, news, picture }: NewsProps) => {
   
   return (
     <Link to="/dashboard/single-news">
-      <div className="flex cursor-pointer flex-col space-y-2">
+      <div className="flex cursor-pointer flex-col space-y-2 bg-white">
         <div className="relative img h-40 w-full rounded-lg overflow-hidden bg-slate-100 ">
           <img src={picture} alt="News-Pic" className="object-cover"/>
         </div>
