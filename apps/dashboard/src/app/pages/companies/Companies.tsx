@@ -4,11 +4,15 @@ import DashboardLayout from '../../layouts/DashboardLayout';
 import { Text } from '@chakra-ui/react';
 import { ChevronDoubleRightIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
-import cattle_breeding from './cattle-breeding.jpg';
+import { data } from '../assets/data';
+import CompaniesList from '../../components/companiesList';
 
 type Props = {};
 
 const Companies = (props: Props) => {
+
+  const companies_data = data.companies;
+
   return (
     <DashboardLayout>
       <div className="flex max-w-7xl flex-col py-8 px-2 mx-auto w-full">
@@ -30,27 +34,8 @@ const Companies = (props: Props) => {
             All News
           </p>
           {/**Companies Component */}
-          <div className="grid grid-col-4 gap-2">
-            <div>
-              <div className="flex cursor-pointer flex-col space-y-2">
-                <div className="relative img h-40 w-full rounded-lg overflow-hidden bg-slate-100 ">
-                  <img src={cattle_breeding} alt="Cattle" className="object-cover"/>
-                </div>
-                <p className="text-xs text-slate-500">11 Jan 2023</p>
-                <Text
-                  noOfLines={3}
-                  className=" font-semibold text-lg text-primary-original"
-                >
-                  Chinhoyi University of technology designed a biogas digester,
-                  Which is servring ay local compas
-                </Text>
-                <span className="flex flex-row items-center gap-1 self-end text-slate-500 hover:text-primary-original cursor-pointer">
-                  <p className="text-sm self-end ">Read More</p>
-                  <ChevronDoubleRightIcon height={12} width={12} className="" />
-                </span>
-              </div>
-            </div>
-          </div>
+          {/**News Component */}
+          <CompaniesList newsData={companies_data} />
         </div>
       </div>
     </DashboardLayout>

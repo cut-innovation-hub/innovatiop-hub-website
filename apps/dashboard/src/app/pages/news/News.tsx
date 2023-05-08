@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import NewsList from '../../components/NewsList/NewsList';
+import List from '../../components/ListPage/List';
 import DashboardLayout from '../../layouts/DashboardLayout';
-
+import { data } from '../assets/data';
 
 type Props = {};
 
 const News = (props: Props) => {
   const [search, setSearch] = useState('All');
+
+  const newsData = data.news_data
 
 
   return (
@@ -32,7 +34,7 @@ const News = (props: Props) => {
             All News
           </p>
           {/**News Component */}
-          <NewsList />
+          <List newsData={newsData} />
         </div>
       </div>
     </DashboardLayout>
