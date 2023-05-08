@@ -6,7 +6,11 @@ type Props = {}
 
 const Dashboard = (props: Props) => {
   return (
-    <DashboardLayout>Dashboard</DashboardLayout>
+    <DashboardLayout>
+      <div>
+        fff
+      </div>
+    </DashboardLayout>
   )
 }
 

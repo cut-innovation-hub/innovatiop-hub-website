@@ -1,4 +1,4 @@
-const getMessage = (err: {
+export const getMessage = (err: {
   response: { data: { message: any } };
   message: any;
 }) => {
@@ -7,4 +7,4 @@ const getMessage = (err: {
     : err.message;
 };
 
-export { getMessage };
+

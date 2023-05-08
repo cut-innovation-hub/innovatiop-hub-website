@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import NewsList from '../../components/NewsList/NewsList';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
 
 type Props = {};
 
 const News = (props: Props) => {
+  const [search, setSearch] = useState('All');
+
 
   return (
     <DashboardLayout>
@@ -16,12 +20,19 @@ const News = (props: Props) => {
             placeholder="search..."
             className="border border-slate-200 flex-1 p-2 rounded"
           />
-          <Link to='/dashboard/create-news' className="flex bg-blue-800 hover:bg-blue-900 font-semibold cursor-pointer text-white items-center content-center p-2 rounded-lg">
+          <Link
+            to="/dashboard/create-news"
+            className="flex bg-blue-800 hover:bg-blue-900 font-semibold cursor-pointer text-white items-center content-center p-2 rounded-lg"
+          >
             Create Post
           </Link>
         </div>
-        <div className="py-8">
-          <p className='text-slate-900 font-semibold text-lg'>All News</p>
+        <div className="py-8 flex flex-col gap-8 w-full bg-gray-200 mx-auto rounded-lg m-4">
+          <p className="text-slate-900 font-semibold text-lg text-center mt-3">
+            All News
+          </p>
+          {/**News Component */}
+          <NewsList />
         </div>
       </div>
     </DashboardLayout>
