@@ -1,5 +1,7 @@
 // import dotenv from 'dote'
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+dotenv.config()
 
 /**
  * @notice - functions give permissions to users with certain roles

@@ -14,6 +14,8 @@ const FAQS = (props: Props) => {
   const url = `${apiUrl}/faqs/all`;
   const response = useFetch(url);
 
+  console.log(apiUrl)
+
   console.log(response);
 
   const faqs = [
@@ -61,13 +63,7 @@ const FAQS = (props: Props) => {
             <FetchLoading />
           ) : (
             <div className="flex flex-col space-y-2">
-              {response?.data?.faqs.map((item: any, index: number) => (
-                <CustomAccordion
-                  key={index}
-                  title={item.question}
-                  content={item.solution}
-                />
-              ))}
+             
             </div>
           )}
         </div>

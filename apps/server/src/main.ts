@@ -12,6 +12,9 @@ import cors from 'cors'
 import morgan from 'morgan'
 import connectDB from './utils/mongo';
 const app = express();
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 // connect database
 connectDB()
@@ -34,6 +37,7 @@ app.use('/api/faqs', faqs)
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, () => {
+  console.log(process.env.API_URL)
   console.log(`Listening at http://localhost:${port}/api`);
 });
 server.on('error', console.error);
