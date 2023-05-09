@@ -8,6 +8,7 @@ import Companies from './pages/companies/Companies';
 import Dashboard from './pages/Dashboard';
 import AddNews from './pages/news/AddNews';
 import News from './pages/news/News';
+import FAQS from './pages/paqs/FAQS';
 
 export function App() {
   return (
@@ -27,6 +28,10 @@ export function App() {
       <Route
         path="/dashboard/news"
         element={<AuthRoute Component={<News />} />}
+      />
+       <Route
+        path="/dashboard/faqs"
+        element={<AuthRoute Component={<FAQS />} />}
       />
       <Route
         path="/dashboard/create-news"

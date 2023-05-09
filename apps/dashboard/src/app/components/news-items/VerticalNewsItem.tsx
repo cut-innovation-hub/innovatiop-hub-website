@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Text } from '@chakra-ui/react';
 import { ChevronDoubleRightIcon } from '@heroicons/react/24/outline';
-import Image from 'next/image';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface NewsProps {
   date: any;
@@ -13,18 +12,12 @@ interface NewsProps {
 function VerticalNewsItem({ date, news, picture }: NewsProps) {
   const navigate = useNavigate();
   return (
-    <div
-      onClick={() => navigate('/single-news')}
-      className="flex cursor-pointer flex-col space-y-2"
-    >
+    <Link to="/dashboard/single-news">
+    <div className="flex cursor-pointer flex-col space-y-2 bg-white">
       <div className="relative img h-40 w-full rounded-lg overflow-hidden bg-slate-100 ">
-        <Image
-          src={picture.src}
-          alt=""
-          layout="fill"
-          className="object-cover"
-        />
+        <img src={picture} alt="News-Pic" className="object-cover"/>
       </div>
+      <div className="flex flex-col p-4 ">
       <p className="text-xs text-slate-500">{date}</p>
       <Text
         noOfLines={3}
@@ -36,7 +29,9 @@ function VerticalNewsItem({ date, news, picture }: NewsProps) {
         <p className="text-sm self-end ">Read More</p>
         <ChevronDoubleRightIcon height={12} width={12} className="" />
       </span>
+      </div>
     </div>
+  </Link>
   );
 }
 

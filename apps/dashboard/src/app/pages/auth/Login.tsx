@@ -153,7 +153,7 @@ const Login = (props: Props) => {
 
             <div>
               <BlueButton
-                text="Register"
+                text="Login"
                 onClick={login_user_handler}
                 className="w-full"
                 loading={loading}

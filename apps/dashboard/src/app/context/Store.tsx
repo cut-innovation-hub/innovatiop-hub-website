@@ -12,7 +12,8 @@ const initialState = {
   chat_state: 'close',
 };
 
-export const Store = createContext(initialState);
+// @ts-ignore
+export const Store = createContext();
 
 function reducer(
   state: { ihub_user: null },

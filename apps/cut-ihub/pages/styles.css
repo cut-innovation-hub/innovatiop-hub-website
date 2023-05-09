@@ -11,6 +11,12 @@
   visibility: hidden;
   display: none;
 }
+
+.grid_companies{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  background-color: brown;
+}
     
 .swiper-button-disabled {
       visibility: hidden;

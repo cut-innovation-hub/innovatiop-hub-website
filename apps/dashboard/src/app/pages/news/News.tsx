@@ -1,11 +1,56 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Link, useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
-
+import cattle_breeding from '../../../assets/cattle-breeding.jpg';
+import VerticalNewsItem from '../../components/news-items/VerticalNewsItem';
 
 type Props = {};
 
 const News = (props: Props) => {
+  const newsData = [
+    {
+      picture: cattle_breeding,
+      details:
+        ' We have been making a lot of sanitizers lately. We are supplying in batches',
+      date: 'March 12, 2022',
+    },
+    {
+      picture: cattle_breeding,
+      details:
+        ' We have been making a lot of sanitizers lately. We are supplying in batches',
+      date: 'March 12, 2022',
+    },
+    {
+      picture: cattle_breeding,
+      details:
+        ' We have been making a lot of sanitizers lately. We are supplying in batches',
+      date: 'March 12, 2022',
+    },
+    {
+      picture: cattle_breeding,
+      details:
+        ' We have been making a lot of sanitizers lately. We are supplying in batches',
+      date: 'March 12, 2022',
+    },
+    {
+      picture: cattle_breeding,
+      details:
+        ' We have been making a lot of sanitizers lately. We are supplying in batches',
+      date: 'March 12, 2022',
+    },
+    {
+      picture: cattle_breeding,
+      details:
+        ' We have been making a lot of sanitizers lately. We are supplying in batches',
+      date: 'March 12, 2022',
+    },
+    {
+      picture: cattle_breeding,
+      details:
+        ' We have been making a lot of sanitizers lately. We are supplying in batches',
+      date: 'March 12, 2022',
+    },
+  ];
 
   return (
     <DashboardLayout>
@@ -16,12 +61,25 @@ const News = (props: Props) => {
             placeholder="search..."
             className="border border-slate-200 flex-1 p-2 rounded"
           />
-          <Link to='/dashboard/create-news' className="flex bg-blue-800 hover:bg-blue-900 font-semibold cursor-pointer text-white items-center content-center p-2 rounded-lg">
+          <Link
+            to="/dashboard/create-news"
+            className="flex bg-blue-800 hover:bg-blue-900 font-semibold cursor-pointer text-white items-center content-center p-2 rounded-lg"
+          >
             Create Post
           </Link>
         </div>
         <div className="py-8">
-          <p className='text-slate-900 font-semibold text-lg'>All News</p>
+          <p className="text-slate-900 font-semibold text-lg pb-8">All News</p>
+          <div className="grid md:grid-cols-3 xl:grid-cols-4 grid-cols md:gap-8 gap-2 px-2">
+            {newsData.map((item, index) => (
+              <VerticalNewsItem
+                news={item.details}
+                picture={item.picture}
+                date={item.date}
+                key={index}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </DashboardLayout>

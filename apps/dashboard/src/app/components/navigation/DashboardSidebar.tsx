@@ -7,9 +7,11 @@ import {
   HomeIcon,
   UserGroupIcon,
   MapIcon,
+  UsersIcon,
 } from "@heroicons/react/24/outline";
 import DashboardSidebarLink from "../links/DashboardSidebarLink";
 import { useLocation, useNavigate } from "react-router-dom";
+import logo from '../../../assets/logo.png'
 
 const navigation = [
   { name: "Home", href: "/dashboard", icon: HomeIcon, current: false },
@@ -20,6 +22,7 @@ const navigation = [
     current: false,
   },
   { name: "News", href: "/dashboard/news", icon: MapIcon, current: false },
+  {name: "FAQs", href: "/dashboard/faqs", icon: UsersIcon, current: false },
 
  
  
@@ -92,8 +95,8 @@ function DashboardSidebar({ sidebarOpen, setSidebarOpen }: Props) {
                 className="cursor pointer flex-shrink-0 flex items-center px-4"
               >
                 <div className="relative self-center mx-auto h-32 w-32 my-4">
-                  {/* <Image layout="fill" src={logo} alt="dashboard indicator of site name" /> */}
-                  logo
+                  <img src={logo} alt="dashboard indicator of site name" />
+                  {/* Dashboard */}
                 </div>
               </div>
 
@@ -132,9 +135,8 @@ function DashboardSidebar({ sidebarOpen, setSidebarOpen }: Props) {
               onClick={() => router("/")}
               className="flex items-center flex-shrink-0"
             >
-              <div className="relative py-2 h-40 self-center mx-auto">
-                {/* <Image  objectFit="contain" src={logo} alt="dashboard indicator of site name" /> */}
-                logo
+              <div className="relative py-2 h-50 self-center mx-auto">
+                <img src={logo} alt="dashboard indicator of site name" />
               </div>
             </div>
 
