@@ -10,6 +10,7 @@ import AddNews from './pages/news/AddNews';
 import News from './pages/news/News';
 import AddFaqs from './pages/paqs/AddFaqs';
 import FAQS from './pages/paqs/FAQS';
+import Settings from './pages/settings/Settings';
 
 export function App() {
   return (
@@ -41,6 +42,10 @@ export function App() {
       <Route
         path="/dashboard/create-news"
         element={<AuthRoute Component={<AddNews />} />}
+      />
+       <Route
+        path="/password"
+        element={<AuthRoute Component={<Settings />} />}
       />
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
