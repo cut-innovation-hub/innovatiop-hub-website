@@ -8,6 +8,7 @@ import Companies from './pages/companies/Companies';
 import Dashboard from './pages/Dashboard';
 import AddNews from './pages/news/AddNews';
 import News from './pages/news/News';
+import AddFaqs from './pages/paqs/AddFaqs';
 import FAQS from './pages/paqs/FAQS';
 
 export function App() {
@@ -32,6 +33,10 @@ export function App() {
        <Route
         path="/dashboard/faqs"
         element={<AuthRoute Component={<FAQS />} />}
+      />
+       <Route
+        path="/dashboard/add-faqs"
+        element={<AuthRoute Component={<AddFaqs />} />}
       />
       <Route
         path="/dashboard/create-news"
