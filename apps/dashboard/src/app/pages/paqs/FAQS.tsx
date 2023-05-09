@@ -1,12 +1,21 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import { Spinner } from '@chakra-ui/react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CustomAccordion from '../../components/custom-accordion/CustomAccordion';
+import FetchLoading from '../../components/loading/FetchLoading';
+import { useFetch } from '../../hooks/useFetch';
 import DashboardLayout from '../../layouts/DashboardLayout';
+import { apiUrl } from '../../utils/apiUrl';
 
 type Props = {};
 
 const FAQS = (props: Props) => {
+  const url = `${apiUrl}/faqs/all`;
+  const response = useFetch(url);
+
+  console.log(response);
+
   const faqs = [
     {
       question: 'Who decides where/how Hub investment funds are spent?',
@@ -48,15 +57,19 @@ const FAQS = (props: Props) => {
         </div>
         <div className="py-8">
           <p className="text-slate-900 font-semibold text-lg pb-8">All FAQs</p>
-          <div className="flex flex-col space-y-2">
-            {faqs.map((item, index) => (
-              <CustomAccordion
-                key={index}
-                title={item.question}
-                content={item.answer}
-              />
-            ))}
-          </div>
+          {response?.status === 'fetching' ? (
+            <FetchLoading />
+          ) : (
+            <div className="flex flex-col space-y-2">
+              {response?.data?.faqs.map((item: any, index: number) => (
+                <CustomAccordion
+                  key={index}
+                  title={item.question}
+                  content={item.solution}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </DashboardLayout>
