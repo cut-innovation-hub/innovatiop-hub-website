@@ -44,20 +44,12 @@ const CompaniesTable = ({
     const router = useNavigate()
     const [loading, setLoading] = useState(false)
     const toast = useToast()
-    const [sortBy, setSortBy] = useState('title')
-    const [sortOrder, setSortOrder] = useState('desc')
  
     // @ts-ignore
   const { state } = useContext(Store)
   const { ihub_user : userInfo } = state
 
-  const sort_handler = () => {
-    router(
-      `/dashboard/inventory?&sort_order=${
-        sortOrder ? sortOrder : ''
-      }&sort_value=${sortBy ? sortBy : ''}`
-    )
-  }
+
 
   const confirm_delete_item = async (product_id: string) => {
     try {
@@ -109,7 +101,7 @@ const CompaniesTable = ({
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           <div className="w-full overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-[#3a3a3c] text-white">
+              <thead className="bg-black text-white">
                 <tr>
                   <th
                     scope="col"
@@ -202,7 +194,7 @@ const CompaniesTable = ({
                           <div className="flex flex-row items-center space-x-2">
                             <span
                               onClick={() =>
-                                set_delete_item(product._id, product.title)
+                                set_delete_item(product._id, product.name)
                               }
                               className="cursor-pointer"
                             >
@@ -242,14 +234,14 @@ const CompaniesTable = ({
                   <TrashIcon
                     height={80}
                     width={80}
-                    className="text-blue-primary "
+                    className="text-red-600 "
                   />
                   <p className="my-4 text-center text-lg font-semibold text-gray-800">
                     Delete
                   </p>
                   <p className="text-center">
-                    Are you sure you want to delete product with name{' '}
-                    {product_name}?
+                    Are you sure you want to delete company and all its contents?{' '}
+                    {product_name}
                   </p>
                 </ModalBody>
 

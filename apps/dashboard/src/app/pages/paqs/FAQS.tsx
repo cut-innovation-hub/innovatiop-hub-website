@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Spinner } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CustomAccordion from '../../components/custom-accordion/CustomAccordion';
 import FetchLoading from '../../components/loading/FetchLoading';
+import { removeFromArray } from '../../helpers/arrayMethods';
 import { useFetch } from '../../hooks/useFetch';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import { apiUrl } from '../../utils/apiUrl';
@@ -14,9 +15,15 @@ const FAQS = (props: Props) => {
   const url = `${apiUrl}/faqs/all`;
   const response = useFetch(url);
 
-  console.log(apiUrl)
+  const [products, setProducts] = useState<any>([]);
 
-  console.log(response);
+  useEffect(() => {
+    setProducts(response?.data?.faqs)
+  }, [response?.data?.faqs])
+
+  const delete_item_from_table = (id: any) => {
+    setProducts(removeFromArray(response?.data?.faqs, id));
+  };
 
   const faqs = [
     {
@@ -63,7 +70,15 @@ const FAQS = (props: Props) => {
             <FetchLoading />
           ) : (
             <div className="flex flex-col space-y-2">
-             
+              {products?.map((item: any, index: number) => (
+                <CustomAccordion
+                _id={item._id}
+                  key={index}
+                  delete_item_from_table={delete_item_from_table}
+                  title={item.question}
+                  content={item.solution}
+                />
+              ))}
             </div>
           )}
         </div>

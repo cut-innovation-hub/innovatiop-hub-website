@@ -53,7 +53,6 @@ export const data = {
       name: "cut printing press",
       value: "cut-printing-press",
       _id: "cut-printing-press",
-
       image: cut_printing,
       summary: `CUT Printing Press is a printing and publishing business venture established in 2016 through the initiative of the School of Entrepreneurship and Business Sciences (SEBS) of Chinhoyi University of Technology. The business venture is 100% owned by the university. CUT Printing Press which started operating in March 2016, is not much of a start-up business, but has been operating at a very small and semi-inﬂuential scale. Due to the technological advancements and the ever changing needs and wants of the clients there has emerged this need to upgrade and recapitalise this organisation in order to match the required standards as well as contain costs through smoother and more effective operating methods that will increase customer satisfaction and proﬁtability. In this light we have managed to acquire some important equipment that will bring growth to the business. In addition, we have embraced the modern printing, creative and marketing world which have driven us to offer comprehensive printing, publishing and advertising services
 

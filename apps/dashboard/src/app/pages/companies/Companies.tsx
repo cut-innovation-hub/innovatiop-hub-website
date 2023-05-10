@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/ban-types */
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CompaniesTable from '../../components/tables/CompaniesTable';
 import { Store } from '../../context/Store';
+import { removeFromArray } from '../../helpers/arrayMethods';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import { data } from '../../utils/data';
 
@@ -21,13 +22,13 @@ const Companies = (props: Props) => {
   const { ihub_user: userInfo } = state;
   const prod_page = page ? page : 1;
 
-  // useEffect(() => {
-  //   setProducts(all_products?.data)
-  // }, [all_products])
+  useEffect(() => {
+    setProducts(data?.companies)
+  }, [data])
 
   // console.log(products)
   const delete_item_from_table = (id: any) => {
-    setProducts(products.filter((item: any) => item._id !== id));
+    setProducts(removeFromArray(data?.companies, id));
   };
   return (
     <DashboardLayout>
@@ -38,21 +39,21 @@ const Companies = (props: Props) => {
             placeholder="search..."
             className="border border-slate-200 flex-1 p-2 rounded"
           />
-          <div className="flex bg-blue-800 hover:bg-blue-900 font-semibold cursor-pointer text-white items-center content-center p-2 rounded-lg">
+          <Link to="/dashboard/create-company" className="flex bg-blue-800 hover:bg-blue-900 font-semibold cursor-pointer text-white items-center content-center p-2 rounded-lg">
             Add Company
-          </div>
+          </Link>
         </div>
-        <Link to="/dashboard/create-company" className="py-8">
+        <div className="py-8">
           <p className="text-slate-900 font-semibold text-lg pb-8">All Companies</p>
           <CompaniesTable
-            products={data?.companies}
+            products={products}
             PER_PAGE={PER_PAGE}
             delete_item_from_table={delete_item_from_table}
             data_info={products?.meta}
             setPage={setPage}
             page={page}
           />
-        </Link>
+        </div>
       </div>
     </DashboardLayout>
   );

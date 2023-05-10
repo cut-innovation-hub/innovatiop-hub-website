@@ -12,7 +12,7 @@ function DashboardLayout({children}: Props) {
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   return (
     <main className="flex flex-col h-screen">
-    <div className="flex flex-1 overflow-hidden bg-gray-100">
+    <div className="flex flex-1 overflow-hidden bg-slate-100">
       <div className="flex">
         <DashboardSidebar
           sidebarOpen={sidebarOpen}
@@ -23,7 +23,7 @@ function DashboardLayout({children}: Props) {
         <div className="flex w-full flex-col">
           <DashboardNavbar setSidebarOpen={setSidebarOpen} />
         </div>
-        <div className="flex flex-1 bg-gray-100 overflow-y-auto paragraph px-4">
+        <div className="flex flex-1 bg-slate-100 overflow-y-auto paragraph px-4">
           {children}
         </div>
       </div>

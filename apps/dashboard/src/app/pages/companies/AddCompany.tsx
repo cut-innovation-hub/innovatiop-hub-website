@@ -1,15 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { useState } from 'react'
-import BlueButton from '../../components/buttons/BlueButton'
-import DashboardLayout from '../../layouts/DashboardLayout'
+import React, { useState } from 'react';
+import BlueButton from '../../components/buttons/BlueButton';
+import DashboardLayout from '../../layouts/DashboardLayout';
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { apiUrl } from '../../utils/apiUrl';
 import { getMessage } from '../../utils/getMessage';
+import FileUploadComponent from '../../components/upload-component/FileUploadComponent';
+import {getStorage, ref, uploadBytesResumable, getDownloadURL} from 'firebase/storage'
+import { firebaseApp } from '../../config/firebase';
 
-type Props = {}
+type Props = {};
 
 const AddCompany = (props: Props) => {
   const [description, setDescription] = useState('');
@@ -17,21 +21,57 @@ const AddCompany = (props: Props) => {
   const [sub_heading, setSubHeading] = useState('');
   const [picture, setPicture] = useState<any>();
   const [loading, setLoading] = useState(false);
+  const [pictures_for_upload, setPicturesForUpload] = useState<any>([]);
+  const [progress, setProgress] = useState([])
+  const [urls, setUrls] = useState<any>([])
 
+  // setting selected pictures to upload
+  const selectedPictures = (pictures: any) => {
+    setPicturesForUpload(pictures);
+  };
 
   const toast = useToast();
+
+  const storage = getStorage(firebaseApp);
+  // storage ref for manually selected thumbnail
+
+  console.log(process.env.REACT_APP_API_URL)
+
+ 
+
+  // console.log(urls)
 
   const add_news = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.post(`${apiUrl}/news/create`, {
-        heading,
-        sub_heading,
-        main_pic: '',
-      });
+      // const { data } = await axios.post(`${apiUrl}/news/create`, {
+      //   heading,
+      //   sub_heading,
+      //   main_pic: '',
+      // });
+      for (let i = 0; i < pictures_for_upload.length; i++) {
+        const image = pictures_for_upload[i]
+        const storageRef = ref(storage, `images/${image.name}`)
+        const uploadTask = uploadBytesResumable(storageRef, image)
+        uploadTask.on('state_changed', (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+    
+          setProgress((prevProgress) => {
+            const newProgress:any = [...prevProgress]
+            newProgress[i] = progress.toFixed(2)
+            return newProgress
+          })
+        }, (error) => {
+          console.log(error)
+        }, async () => {
+          const imageUrl = await getDownloadURL(uploadTask.snapshot.ref)
+          // Add to Firestore
+          setUrls((urls:any) => [...urls, imageUrl ])
+        })
+      }
       toast({
         title: 'Post created.',
-        description: getMessage(data),
+        description: 'getMessage(data)',
         status: 'success',
         duration: 9000,
         isClosable: true,
@@ -48,7 +88,6 @@ const AddCompany = (props: Props) => {
       });
     }
   };
-
 
   return (
     <DashboardLayout>
@@ -139,49 +178,10 @@ const AddCompany = (props: Props) => {
                         <span className="text-red-600">*</span>
                       </label>
                       <div className="mt-1 sm:mt-0 sm:col-span-2">
-                        <div className="max-w-lg flex rounded-md shadow-sm">
-                          <div className="flex items-center justify-center w-full">
-                            <label
-                              htmlFor="dropzone-file"
-                              className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-                            >
-                              <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                <svg
-                                  aria-hidden="true"
-                                  className="w-10 h-10 mb-3 text-gray-400"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                                  ></path>
-                                </svg>
-                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                  <span className="font-semibold">
-                                    Click to upload
-                                  </span>{' '}
-                                  or drag and drop
-                                </p>
-                                <p className="text-xs text-gray-500 dark:text-gray-400">
-                                  SVG, PNG, JPG or GIF (MAX. 800x400px)
-                                </p>
-                              </div>
-                              <input
-                                id="dropzone-file"
-                                type="file"
-                                onChange={(e: any) =>
-                                  setPicture(e.target.files[0])
-                                }
-                                className="hidden"
-                              />
-                            </label>
-                          </div>
-                        </div>
+                        <FileUploadComponent
+                          selectedPictures={selectedPictures}
+                          multiple
+                        />
                       </div>
                     </div>
                   </div>
@@ -199,7 +199,7 @@ const AddCompany = (props: Props) => {
         </div>
       </div>
     </DashboardLayout>
-  )
-}
+  );
+};
 
-export default AddCompany
+export default AddCompany;
