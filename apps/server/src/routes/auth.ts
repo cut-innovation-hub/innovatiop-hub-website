@@ -62,6 +62,10 @@ router.post('/login', async(req, res, next)=>{
         return res.status(404).send({ message: "Account does not exist" });
       }
 
+      if (!_user.approved) {
+        return res.status(403).send({ message: 'Account not approved' });
+      }
+
       const password_correct = await bcrypt.compare(password, _user.password);
       if (password_correct) {
         const token = await jwt.sign(
