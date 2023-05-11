@@ -1,56 +1,30 @@
-/* eslint-disable @typescript-eslint/ban-types */
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
-import cattle_breeding from '../../../assets/cattle-breeding.jpg';
-import VerticalNewsItem from '../../components/news-items/VerticalNewsItem';
+import { removeFromArray } from '../../helpers/arrayMethods';
+import { Store } from '../../context/Store';
+import { data } from '../../utils/data';
+import NewsItem from '../../components/news-items/NewsItem';
 
 type Props = {};
 
 const News = (props: Props) => {
-  const newsData = [
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-  ];
+  const [search_query, setSearchQuery] = useState<string>('');
+  const [news, setNews] = useState<any>([]);
+  // @ts-ignore
+  const { state } = useContext(Store);
+  const { ihub_user: userInfo } = state;
+  
+
+  useEffect(() => {
+    setNews(data?.news_data);
+  }, [data]);
+
+  const delete_item_from_table = (id: any) => {
+    setNews(removeFromArray(data?.news_data, id));
+  };
+
+  const newsData = news;
 
   return (
     <DashboardLayout>
@@ -71,8 +45,8 @@ const News = (props: Props) => {
         <div className="py-8">
           <p className="text-slate-900 font-semibold text-lg pb-8">All News</p>
           <div className="grid md:grid-cols-3 xl:grid-cols-4 grid-cols md:gap-8 gap-2 px-2">
-            {newsData.map((item, index) => (
-              <VerticalNewsItem
+            {newsData.map((item: any, index: any) => (
+              <NewsItem
                 news={item.details}
                 picture={item.picture}
                 date={item.date}

@@ -9,7 +9,7 @@ interface NewsProps {
   picture: any;
 }
 
-function VerticalNewsItem({ date, news, picture }: NewsProps) {
+function NewsItem({ date, news, picture }: NewsProps) {
   const navigate = useNavigate();
   return (
     <Link to="/dashboard/single-news">
@@ -35,4 +35,4 @@ function VerticalNewsItem({ date, news, picture }: NewsProps) {
   );
 }
 
-export default VerticalNewsItem;
+export default NewsItem;
