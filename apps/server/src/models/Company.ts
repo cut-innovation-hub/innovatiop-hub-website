@@ -25,6 +25,10 @@ const companySchema = new mongoose.Schema(
     phone: {
       type: String,
     },
+    site:{
+      type: String,
+      default:''
+    }
   },
   {
     timestamps: true,

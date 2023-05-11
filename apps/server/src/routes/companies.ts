@@ -17,6 +17,7 @@ router.post('/create', async (req, res, next) => {
       nature_of_products,
       location,
       gallery,
+      site
     } = req.body;
     if (!name) {
       return res.status(400).send({ message: 'Please enter name!' });
@@ -32,6 +33,7 @@ router.post('/create', async (req, res, next) => {
       nature_of_products,
       location,
       gallery,
+      site
     });
     const saved_company = await NewCompany.save();
     return res
