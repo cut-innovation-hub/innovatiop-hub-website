@@ -5,7 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import CompaniesTable from '../../components/tables/CompaniesTable';
 import { Store } from '../../context/Store';
 import { removeFromArray } from '../../helpers/arrayMethods';
+import { useFetch } from '../../hooks/useFetch';
 import DashboardLayout from '../../layouts/DashboardLayout';
+import { apiUrl } from '../../utils/apiUrl';
 import { data } from '../../utils/data';
 
 type Props = {};
@@ -22,14 +24,26 @@ const Companies = (props: Props) => {
   const { ihub_user: userInfo } = state;
   const prod_page = page ? page : 1;
 
-  useEffect(() => {
-    setProducts(data?.companies)
-  }, [data])
+  const url = `${apiUrl}/companies/all`
+  const response = useFetch(url)
+
+  useEffect(()=>{
+    setProducts(response.data?.companies)
+  },[response.data?.companies])
+
+  // useEffect(() => {
+  //   setProducts(data?.companies)
+  // }, [data])
 
   // console.log(products)
   const delete_item_from_table = (id: any) => {
     setProducts(removeFromArray(data?.companies, id));
   };
+
+
+
+  console.log(response)
+
   return (
     <DashboardLayout>
       <div className="flex max-w-7xl flex-col py-8 px-2 mx-auto w-full">

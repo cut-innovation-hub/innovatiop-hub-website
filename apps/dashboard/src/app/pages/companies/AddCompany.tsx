@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { useState } from 'react';
@@ -17,8 +19,8 @@ import {
   getDownloadURL,
 } from 'firebase/storage';
 import { firebaseApp } from '../../config/firebase';
-import { ArrowUpOnSquareIcon } from '@heroicons/react/24/outline';
 import TagsComponent from '../../components/tags/TagsComponent';
+import { multipleImageUploader } from '../../helpers/multipleImageUploader';
 
 type Props = {};
 
@@ -32,9 +34,9 @@ const AddCompany = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const [site, setSite] = useState('');
   const [pictures_for_upload, setPicturesForUpload] = useState<any>([]);
-  const [progress, setProgress] = useState([]);
-  const [urls, setUrls] = useState<any>([]);
-  const [variations, setVariations] = useState<any>([])
+  const [progress, setProgress] = useState<any>();
+  const [urls, setURLs] = useState<any>([]);
+  const [variations, setVariations] = useState<any>([]);
 
   // setting selected pictures to upload
   const selectedPictures = (pictures: any) => {
@@ -46,116 +48,73 @@ const AddCompany = (props: Props) => {
   const storage = getStorage(firebaseApp);
   // storage ref for manually selected thumbnail
 
-  console.log(process.env.REACT_APP_API_URL);
+  // console.log(process.env.REACT_APP_API_URL);
 
-  const upload_images = async () => {
+  const selectedTags = (tags: any) => {
+    setVariations(tags);
+  };
+
+  const add_company_Handler = async () => {
+    setLoading(true);
     try {
-      for (let i = 0; i < pictures_for_upload.length; i++) {
-        const image = pictures_for_upload[i];
-        const storageRef = ref(
-          storage,
-          `companies/${image.name}-${Date.now()}`
-        );
-        const uploadTask = uploadBytesResumable(storageRef, image);
+      const promises: any = [];
+      pictures_for_upload.map((file: any) => {
+        console.log('loop');
+
+        const sotrageRef = ref(storage, `${'companies'}/${file.name}`);
+
+        const uploadTask = uploadBytesResumable(sotrageRef, file);
+        promises.push(uploadTask);
         uploadTask.on(
           'state_changed',
           (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-            setProgress((prevProgress) => {
-              const newProgress: any = [...prevProgress];
-              newProgress[i] = progress.toFixed(2);
-              return newProgress;
-            });
+            const prog = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            setProgress(prog);
           },
-          (error) => {
-            console.log(error);
-          },
+          (error) => console.log(error),
           async () => {
-            const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
-            // Add to Firestore
-            setUrls((urls: any) => [...urls, imageUrl]);
+            await getDownloadURL(uploadTask.snapshot.ref).then(
+              (downloadURLs) => {
+                setURLs((prevState: any) => [...prevState, downloadURLs]);
+              }
+            );
           }
         );
-      }
-    } catch (error) {
-      console.log(error);
+      });
+
+      await Promise.all(promises);
+      const { data } = await axios.post(`${apiUrl}/companies/create`, {
+        name,
+        phone,
+        email,
+        description,
+        gallery: urls,
+        location: address,
+        site: site,
+        nature_of_products: variations,
+      });
+
+      toast({
+        title: 'Post created.',
+        description: getMessage(data),
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+      setLoading(false);
+    } catch (error: any) {
+      setLoading(false);
+      toast({
+        title: 'Failed to post.',
+        description: getMessage(error),
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
-
-  const selectedTags = (tags: any) => {
-    setVariations(tags)
-  }
-
-  console.log(urls);
-
-  // const add_news = async () => {
-  //   setLoading(true);
-  //   try {
-  //     for (let i = 0; i < pictures_for_upload.length; i++) {
-  //       const image = pictures_for_upload[i];
-  //       const storageRef = ref(
-  //         storage,
-  //         `companies/${image.name}-${Date.now()}`
-  //       );
-  //       const uploadTask = uploadBytesResumable(storageRef, image);
-  //       uploadTask.on(
-  //         'state_changed',
-  //         (snapshot) => {
-  //           const progress =
-  //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-  //           setProgress((prevProgress) => {
-  //             const newProgress: any = [...prevProgress];
-  //             newProgress[i] = progress.toFixed(2);
-  //             return newProgress;
-  //           });
-  //         },
-  //         (error) => {
-  //           console.log(error);
-  //         },
-  //         async () => {
-  //           const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
-  //           // Add to Firestore
-  //           setUrls((urls: any) => [...urls, imageUrl]);
-  //         }
-  //       );
-  //     }
-  //     const { data } = await axios.post(`${apiUrl}/companies/create`, {
-  //       name,
-  //       phone,
-  //       email,
-  //       description,
-  //       gallery: urls,
-  //       location: address,
-  //       site: site,
-  //     });
-
-  //     toast({
-  //       title: 'Post created.',
-  //       description: getMessage(data),
-  //       status: 'success',
-  //       duration: 9000,
-  //       isClosable: true,
-  //     });
-  //     setLoading(false);
-  //   } catch (error: any) {
-  //     setLoading(false);
-  //     toast({
-  //       title: 'Failed to post.',
-  //       description: getMessage(error),
-  //       status: 'error',
-  //       duration: 9000,
-  //       isClosable: true,
-  //     });
-  //   }
-  // };
-
-
-  const add_news = () =>{
-    console.log(variations)
-  }
 
   return (
     <DashboardLayout>
@@ -237,7 +196,7 @@ const AddCompany = (props: Props) => {
                             type="text"
                             name="phonne"
                             onChange={(e) => setPhone(e.target.value)}
-                            value={name}
+                            value={phone}
                             id="phone"
                             autoComplete="phone"
                             className="flex-1 block w-full outline-none p-3 min-w-0 rounded-none rounded-r-md sm:text-sm border border-gray-300"
@@ -299,10 +258,10 @@ const AddCompany = (props: Props) => {
                         <span className="text-slate-600">(optional)</span>
                       </label>
                       <div className="mt-1 sm:mt-0 sm:col-span-2">
-                      <TagsComponent
-                              selectedTags={selectedTags}
-                              className=""
-                            />
+                        <TagsComponent
+                          selectedTags={selectedTags}
+                          className=""
+                        />
                       </div>
                     </div>
                     <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -333,7 +292,7 @@ const AddCompany = (props: Props) => {
                           selectedPictures={selectedPictures}
                           multiple
                         />
-                        {pictures_for_upload.length >= 1 && (
+                        {/* {pictures_for_upload.length >= 1 && (
                           <div
                             onClick={upload_images}
                             className="flex bg-black hover:bg-slate-900 cursor-pointer text-white w-full p-2 rounded text-center"
@@ -345,7 +304,7 @@ const AddCompany = (props: Props) => {
                               </p>
                             </div>
                           </div>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>
@@ -355,7 +314,7 @@ const AddCompany = (props: Props) => {
           </div>
           <div className="flex w-full flex-1 flex-col">
             <BlueButton
-              onClick={add_news}
+              onClick={add_company_Handler}
               loading={loading}
               text={'Create Post'}
             />

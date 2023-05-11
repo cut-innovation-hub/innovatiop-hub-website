@@ -157,7 +157,7 @@ const CompaniesTable = ({
                             <div className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-100">
                               <img
                                 className="h-10 w-10 rounded-full"
-                                src={product.image}
+                                src={product.gallery[1]}
                                 alt=""
                               />
                             </div>
