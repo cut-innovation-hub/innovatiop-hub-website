@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import express from 'express';
 import { News } from '../models/News';
 const router = express.Router();
@@ -20,6 +22,7 @@ router.post('/create', (req, res, next) => {
       sub_heading,
       main_pic,
       gallery,
+      description,
     });
 
     const saved_news = newNews.save();
@@ -40,9 +43,70 @@ router.get('/single', (req, res, next) => {
   }
 });
 
-router.get('/all', (req, res, next) => {
+router.get('/all', async (req, res, next) => {
   try {
-    console.log('get all news');
+    // handling store schema
+    const query = [];
+    // handling search queries
+    if (req.query.keyword && req.query.keyword != '') {
+      query.push({
+        //@ts-ignore
+        $match: {
+          $or: [
+            { heading: { $regex: req.query.keyword, $options: 'i' } },
+            { description: { $regex: req.query.keyword, $options: 'i' } },
+            {
+              sub_heading: { $regex: req.query.keyword, $options: 'i' },
+            },
+          ],
+        },
+      });
+    }
+
+    // handling sort
+    if (req.query.sortBy && req.query.sortOrder) {
+      let sort = {};
+      //@ts-ignore
+      sort[req.query.sortBy] = req.query.sortOrder == 'asc' ? 1 : -1;
+      query.push({
+        //@ts-ignore
+        $sort: sort,
+      });
+    } else {
+      query.push({
+        //@ts-ignore
+        $sort: { createdAt: -1 },
+      });
+    }
+    let total = await News.countDocuments(query);
+    //@ts-ignore
+    let page = req.query.page ? parseInt(req.query.page) : 1;
+    //@ts-ignore
+    let perPage = req.query.perPage ? parseInt(req.query.perPage) : 16;
+    let skip = (page - 1) * perPage;
+
+    query.push({
+      //@ts-ignore
+      $skip: skip,
+    });
+    query.push({
+      //@ts-ignore
+      $limit: perPage,
+    });
+
+    let news = await News.aggregate(query);
+
+    return res.status(200).send({
+      message: 'News fetched sucessfully',
+      length: news.length,
+      meta: {
+        total: total,
+        currentPage: page,
+        perPage: perPage,
+        totalPages: Math.ceil(total / perPage),
+      },
+      news: news,
+    });
   } catch (error) {
     next(error);
   }

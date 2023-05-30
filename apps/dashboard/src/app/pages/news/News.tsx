@@ -1,12 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import { Link, useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import cattle_breeding from '../../../assets/cattle-breeding.jpg';
 import VerticalNewsItem from '../../components/news-items/VerticalNewsItem';
+import { useEffect, useState } from 'react';
+import { apiUrl } from '../../utils/apiUrl';
+import { useFetch } from '../../hooks/useFetch';
 
 type Props = {};
 
 const News = (props: Props) => {
+  const [news, setNews] = useState<any>([]);
+
+  const url = `${apiUrl}/news/all`;
+  const response = useFetch(url);
+
+  console.log(response);
+
+  useEffect(() => {
+    setNews(response?.data?.news);
+  }, [response]);
+
   const newsData = [
     {
       picture: cattle_breeding,
@@ -71,11 +86,11 @@ const News = (props: Props) => {
         <div className="py-8">
           <p className="text-slate-900 font-semibold text-lg pb-8">All News</p>
           <div className="grid md:grid-cols-3 xl:grid-cols-4 grid-cols md:gap-8 gap-2 px-2">
-            {newsData.map((item, index) => (
+            {news?.map((item: any, index: number) => (
               <VerticalNewsItem
-                news={item.details}
-                picture={item.picture}
-                date={item.date}
+                news={item.heading}
+                picture={item.main_pic}
+                date={item.createdAt}
                 key={index}
               />
             ))}

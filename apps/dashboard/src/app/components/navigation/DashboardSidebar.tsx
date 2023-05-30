@@ -8,6 +8,7 @@ import {
   UserGroupIcon,
   MapIcon,
   UsersIcon,
+  BuildingOffice2Icon,
 } from "@heroicons/react/24/outline";
 import DashboardSidebarLink from "../links/DashboardSidebarLink";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -23,6 +24,7 @@ const navigation = [
   },
   { name: "News", href: "/dashboard/news", icon: MapIcon, current: false },
   {name: "FAQs", href: "/dashboard/faqs", icon: UsersIcon, current: false },
+  {name: "Team", href: "/dashboard/team", icon: BuildingOffice2Icon, current: false },
 
  
  

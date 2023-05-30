@@ -11,6 +11,7 @@ import News from './pages/news/News';
 import AddFaqs from './pages/paqs/AddFaqs';
 import FAQS from './pages/paqs/FAQS';
 import Settings from './pages/settings/Settings';
+import Team from './pages/team/Team';
 
 export function App() {
   return (
@@ -42,6 +43,10 @@ export function App() {
       <Route
         path="/dashboard/create-news"
         element={<AuthRoute Component={<AddNews />} />}
+      />
+        <Route
+        path="/dashboard/team"
+        element={<AuthRoute Component={<Team />} />}
       />
        <Route
         path="/password"
