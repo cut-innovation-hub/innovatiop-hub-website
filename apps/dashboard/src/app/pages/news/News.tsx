@@ -16,7 +16,7 @@ const News = (props: Props) => {
   const url = `${apiUrl}/news/all`;
   const response = useFetch(url);
 
-  console.log(response);
+  // console.log(response);
 
   useEffect(() => {
     setNews(response?.data?.news);
@@ -85,16 +85,20 @@ const News = (props: Props) => {
         </div>
         <div className="py-8">
           <p className="text-slate-900 font-semibold text-lg pb-8">All News</p>
-          <div className="grid md:grid-cols-3 xl:grid-cols-4 grid-cols md:gap-8 gap-2 px-2">
-            {news?.map((item: any, index: number) => (
-              <VerticalNewsItem
-                news={item.heading}
-                picture={item.main_pic}
-                date={item.createdAt}
-                key={index}
-              />
-            ))}
-          </div>
+          {news?.length < 1 ? (
+            <p className='text-slate-700 text-xl font-semibold py-16 text-center w-full'>No News At The moment</p>
+          ) : (
+            <div className="grid md:grid-cols-3 xl:grid-cols-4 grid-cols md:gap-8 gap-2 px-2">
+              {news?.map((item: any, index: number) => (
+                <VerticalNewsItem
+                  news={item.heading}
+                  picture={item.main_pic}
+                  date={item.createdAt}
+                  key={index}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </DashboardLayout>
