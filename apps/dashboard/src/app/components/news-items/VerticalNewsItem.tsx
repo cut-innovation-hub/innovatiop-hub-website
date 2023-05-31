@@ -1,7 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Text } from '@chakra-ui/react';
-import { ChevronDoubleRightIcon, EllipsisVerticalIcon } from '@heroicons/react/24/outline';
+import {
+  ChevronDoubleRightIcon,
+  EllipsisVerticalIcon,
+} from '@heroicons/react/24/outline';
 import { Link, useNavigate } from 'react-router-dom';
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from '@chakra-ui/react';
 
 interface NewsProps {
   date: any;
@@ -32,9 +45,22 @@ function VerticalNewsItem({ date, news, picture }: NewsProps) {
               <p className="text-sm self-end ">Read More</p>
               <ChevronDoubleRightIcon height={12} width={12} className="" />
             </span>
-            <span className='bg-slate-100 rounded-full p-2 hover:bg-slate-200'>
-              <EllipsisVerticalIcon height={16} width={16} />
-            </span>
+            <div className="flex">
+              <Menu>
+                <MenuButton className="rounded-full p-2 hover:bg-slate-100">
+                  <span >
+                    <EllipsisVerticalIcon height={16} width={16} />
+                  </span>
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>Publish</MenuItem>
+                  <MenuItem>make headline</MenuItem>
+                  <MenuItem>Hide from blog</MenuItem>
+                  <MenuDivider />
+                  <MenuItem>Delete</MenuItem>
+                </MenuList>
+              </Menu>
+            </div>
           </div>
         </div>
       </div>
