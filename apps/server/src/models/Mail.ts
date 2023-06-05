@@ -10,9 +10,6 @@ const mailSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    location: {
-      type: String,
-    },
     email: {
       type: String,
     },
