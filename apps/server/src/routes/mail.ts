@@ -37,4 +37,72 @@ router.post('/create', async (req, res, next) => {
   }
 });
 
+// get all faqs
+// get request
+router.get('/all', async (req, res, next) => {
+    try {
+      // handling store schema
+      const query = [];
+  
+      // handling search queries
+      if (req.query.keyword && req.query.keyword != '') {
+        query.push({
+          //@ts-ignore
+          $match: {
+            $or: [
+              { description: { $regex: req.query.keyword, $options: 'i' } },
+              { name: { $regex: req.query.keyword, $options: 'i' } },
+            ],
+          },
+        });
+      }
+  
+        //  Tatenda Bako
+        // https://github.com/tatendabakozw
+      if (req.query.sortBy && req.query.sortOrder) {
+        let sort = {};
+        //@ts-ignore
+        sort[req.query.sortBy] = req.query.sortOrder == 'asc' ? 1 : -1;
+        query.push({
+          $sort: sort,
+        });
+      } else {
+        query.push({
+          $sort: { createdAt: -1 },
+        });
+      }
+  
+      let total = await Mail.countDocuments(query);
+  
+      //@ts-ignore
+      let page = req.query.page ? parseInt(req.query.page) : 1;
+      //@ts-ignore
+      let perPage = req.query.perPage ? parseInt(req.query.perPage) : 16;
+      let skip = (page - 1) * perPage;
+  
+      query.push({
+        $skip: skip,
+      });
+      query.push({
+        $limit: perPage,
+      });
+  
+      let mail = await Mail.aggregate(query);
+  
+      return res.status(200).send({
+        message: 'mail fetched sucessfully',
+        length: mail.length,
+        meta: {
+          total: total,
+          currentPage: page,
+          perPage: perPage,
+          totalPages: Math.ceil(total / perPage),
+        },
+        mail: mail,
+      });
+    } catch (error) {
+      next(error);
+    }
+  });
+
 export default router;
