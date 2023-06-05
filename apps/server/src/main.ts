@@ -9,6 +9,7 @@ import companies from './routes/companies'
 import auth from './routes/auth'
 import faqs from './routes/faqs'
 import news from './routes/news'
+import mailRoute from './routes/mail'
 import cors from 'cors'
 import morgan from 'morgan'
 import connectDB from './utils/mongo';
@@ -36,6 +37,7 @@ app.use('/api/companies', companies)
 app.use('/api/auth', auth)
 app.use('/api/faqs', faqs)
 app.use('/api/news', news)
+app.use('/api/mail', mailRoute)
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, () => {
