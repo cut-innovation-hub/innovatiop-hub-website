@@ -12,6 +12,7 @@ import AddFaqs from './pages/paqs/AddFaqs';
 import FAQS from './pages/paqs/FAQS';
 import Settings from './pages/settings/Settings';
 import Team from './pages/team/Team';
+import Mail from './pages/mail/Mail';
 
 export function App() {
   return (
@@ -47,6 +48,10 @@ export function App() {
         <Route
         path="/dashboard/team"
         element={<AuthRoute Component={<Team />} />}
+      />
+      <Route
+        path="/dashboard/mail"
+        element={<AuthRoute Component={<Mail />} />}
       />
        <Route
         path="/password"
