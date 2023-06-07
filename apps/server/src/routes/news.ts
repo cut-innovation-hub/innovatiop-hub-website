@@ -35,13 +35,12 @@ router.post('/create', (req, res, next) => {
 
 // get single news
 // get request
-router.get('/single',async (req, res, next) => {
+router.get('/single', async (req, res, next) => {
   try {
-    const {id} = req.query
-    const news = await News.findOne({_id: id})
+    const { id } = req.query;
+    const news = await News.findOne({ _id: id });
 
-    return res.status(200).send({message: 'News item found', news: news})
-
+    return res.status(200).send({ message: 'News item found', news: news });
   } catch (error) {
     next(error);
   }
@@ -111,6 +110,26 @@ router.get('/all', async (req, res, next) => {
       },
       news: news,
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch('/edit', async (req, res, next) => {
+  try {
+    const { id } = req.query;
+    const { heading, description, sub_heading, main_pic } = req.body;
+    await News.findByIdAndUpdate(
+      { _id: id },
+      {
+        heading,
+        description,
+        sub_heading,
+        main_pic,
+      },
+      { upsert: true }
+    );
+    return res.status(200).send({ message: 'Post updated successfully' });
   } catch (error) {
     next(error);
   }

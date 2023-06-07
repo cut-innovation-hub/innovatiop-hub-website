@@ -51,9 +51,9 @@ const EditNews = (props: Props) => {
 
   const on_picture_select = (e: any) => {
     try {
+      setUploadStarted(true);
       const id = generateId(10);
       // setPicture(e.target.files[0]);
-      setUploadStarted(true);
       const storage = getStorage(firebaseApp);
       const sotrageRef = ref(storage, `${'news'}/${id}`);
       const uploadTask = uploadBytesResumable(sotrageRef, e.target.files[0]);
@@ -69,11 +69,13 @@ const EditNews = (props: Props) => {
         async () => {
           await getDownloadURL(uploadTask.snapshot.ref).then((downloadURLs) => {
             setURL(downloadURLs);
+            setUploadStarted(false);
           });
         }
       );
+      //   setUploadStarted(false);
     } catch (error) {
-      setUploadStarted(true);
+      setUploadStarted(false);
       console.log(error);
     }
   };
@@ -213,6 +215,61 @@ const EditNews = (props: Props) => {
                         <span className="text-red-600">*</span>
                       </label>
                       {upload_started ? (
+                        <div className="mt-1 sm:mt-0 sm:col-span-2 flex flex-col w-full">
+                          <p>Uploading...</p>
+                          <Progress
+                            hasStripe
+                            size="sm"
+                            value={progress}
+                            className="w-full"
+                          />
+                        </div>
+                      ) : (
+                        <>
+                          {url ? (
+                            <div className="mt-1 sm:mt-0 sm:col-span-2 h-96 w-96 flex justify-center bg-slate-100 flex-col rounded relative overflow-hidden">
+                              <div className="flex flex-row items-center absolute right-4 top-4 space-x-2">
+                                <span className="bg-white rounded-full  cursor-pointer p-2 text-red-500">
+                                  <TrashIcon height={20} width={20} />
+                                </span>
+                                <span className="cursor-pointer bg-white rounded-full">
+                                  <div className="flex">
+                                    <label
+                                      htmlFor="formFile"
+                                      className="inline-block  rounded-full   p-2 text-blue-500"
+                                    >
+                                      <CameraIcon height={20} width={20} />
+                                    </label>
+                                  </div>
+                                  <input
+                                    className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
+                                    type="file"
+                                    style={{ display: 'none' }}
+                                    onChange={on_picture_select}
+                                    id="formFile"
+                                  />
+                                </span>
+                              </div>
+                              <img
+                                src={url}
+                                alt=""
+                                className="object-contain"
+                              />
+                            </div>
+                          ) : (
+                            <div className="mt-1 sm:mt-0 sm:col-span-2 flex flex-col w-full">
+                              <p>Uploading...</p>
+                              <Progress
+                                hasStripe
+                                size="sm"
+                                value={progress}
+                                className="w-full"
+                              />
+                            </div>
+                          )}
+                        </>
+                      )}
+                      {/* {upload_started ? (
                         <Fragment>
                           {url ? (
                             <div className="mt-1 sm:mt-0 sm:col-span-2 flex flex-col w-full rounded relative overflow-hidden">
@@ -271,7 +328,7 @@ const EditNews = (props: Props) => {
                             </div>
                           </div>
                         </div>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
