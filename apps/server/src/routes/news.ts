@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import express from 'express';
 import { News } from '../models/News';
+import { Headline } from '../models/news/Headline';
 const router = express.Router();
 
 // create news
@@ -130,6 +131,20 @@ router.patch('/edit', async (req, res, next) => {
       { upsert: true }
     );
     return res.status(200).send({ message: 'Post updated successfully' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/make-headline', async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    const newHeadline = new Headline({
+      news_id: id,
+    });
+    const savedHeadline = await newHeadline.save();
+    return res.status(200).send({ message: 'News made headline', headline: savedHeadline });
+    
   } catch (error) {
     next(error);
   }
