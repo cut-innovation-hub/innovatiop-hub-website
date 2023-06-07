@@ -156,7 +156,7 @@ const EditNews = (props: Props) => {
                         Heading <span className="text-red-600">*</span>
                       </label>
                       <div className="mt-1 sm:mt-0 sm:col-span-2">
-                        <div className="max-w-lg flex rounded-md shadow-sm">
+                        <div className="max-w-2xl flex rounded-md shadow-sm">
                           <input
                             type="text"
                             name="username"
@@ -178,7 +178,7 @@ const EditNews = (props: Props) => {
                         Sub-Heading <span className="text-red-600">*</span>
                       </label>
                       <div className="mt-1 sm:mt-0 sm:col-span-2">
-                        <div className="max-w-lg flex rounded-md shadow-sm">
+                        <div className="max-w-2xl flex rounded-md shadow-sm">
                           <input
                             type="text"
                             name="username"
@@ -259,7 +259,7 @@ const EditNews = (props: Props) => {
                             </div>
                           ) : (
                             <div className="mt-1 sm:mt-0 sm:col-span-2">
-                              <div className="max-w-lg flex rounded-md shadow-sm">
+                              <div className="max-w-2xl flex rounded-md shadow-sm">
                                 <div className="mb-3">
                                   <label
                                     htmlFor="formFile"
@@ -321,7 +321,7 @@ const EditNews = (props: Props) => {
                         </Fragment>
                       ) : (
                         <div className="mt-1 sm:mt-0 sm:col-span-2">
-                          <div className="max-w-lg flex rounded-md shadow-sm">
+                          <div className="max-w-2xl flex rounded-md shadow-sm">
                             <div className="mb-3">
                               <label
                                 htmlFor="formFile"
