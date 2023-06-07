@@ -13,6 +13,8 @@ import {
 import { ReactNode, useState } from 'react';
 import NewsModal from '../modals/NewsModal';
 import BlueButton from '../buttons/BlueButton';
+import axios from 'axios';
+import { apiUrl } from '../../utils/apiUrl';
 
 interface NewsProps {
   date: any;
@@ -26,25 +28,40 @@ function VerticalNewsItem({ date, news, picture, _id }: NewsProps) {
   const [modalHeading, setModalHeading] = useState('');
   const [actionButton, setActionButton] = useState<ReactNode>();
   const [modalBody, setModalBody] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
 
-  const make_headline = async () => {
-    setModalHeading('Make news headline');
-    setModalBody('Are your sure you want to make this post as headline?');
-    setActionButton(<BlueButton text={'Proceed'} /> );
-    onOpen();
+  const make_headline_Handler = async () => {
     try {
-      // toast({
-      //   title: 'News  made headline',
-      //   status: 'success',
-      //   duration: 9000,
-      //   isClosable: true,
-      //   position: 'top-right',
-      // });
+      setLoading(true);
+      await axios.post(`${apiUrl}/news/make-headline`, {
+        id: _id,
+      });
+      toast({
+        title: 'News  made headline',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
+  };
+
+  const make_headline = () => {
+    setModalHeading('Make news headline');
+    setModalBody('Are your sure you want to make this post as headline?');
+    setActionButton(
+      <BlueButton
+        text={'Proceed'}
+        onClick={make_headline_Handler}
+      />
+    );
+    onOpen();
   };
 
   return (
@@ -96,7 +113,7 @@ function VerticalNewsItem({ date, news, picture, _id }: NewsProps) {
         body={modalBody}
         action_button={actionButton}
         isOpen={isOpen}
-        loading={false}
+        loading={loading}
         onClose={onClose}
       />
     </div>
