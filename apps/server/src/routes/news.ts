@@ -153,7 +153,7 @@ router.post('/make-headline', async (req, res, next) => {
 // get headline news
 router.get('/headline', async (req, res, next)=>{
   try {
-    const headline = await Headline.findOne().sort({created_at: -1})
+    const headline = await Headline.findOne().sort({createdAt: -1})
     const headLineNews = await News.findOne({_id: headline._id})
 
     return res.status(200).send({message: 'Headline news found', headline: headLineNews})
