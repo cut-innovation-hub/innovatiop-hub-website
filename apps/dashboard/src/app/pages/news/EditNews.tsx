@@ -8,7 +8,7 @@ import { Progress, useToast } from '@chakra-ui/react';
 import { apiUrl } from '../../utils/apiUrl';
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   getStorage,
@@ -18,6 +18,10 @@ import {
 } from 'firebase/storage';
 import { firebaseApp } from '../../config/firebase';
 import { generateId } from '../../helpers/generateId';
+import { useSearchParams } from 'react-router-dom';
+import { useFetch } from '../../hooks/useFetch';
+import FetchLoading from '../../components/loading/FetchLoading';
+import { CameraIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 type Props = {};
 
@@ -25,11 +29,23 @@ const EditNews = (props: Props) => {
   const [description, setDescription] = useState('');
   const [heading, setHeading] = useState('');
   const [sub_heading, setSubHeading] = useState('');
-  const [picture, setPicture] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState<any>();
   const [upload_started, setUploadStarted] = useState(false);
-  const [url, setURL] = useState('');
+  const [url, setURL] = useState<string>('');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const url_1 = `${apiUrl}/news/single/?id=${searchParams.get('id')}`;
+  const respose = useFetch(url_1);
+
+  useEffect(() => {
+    setDescription(respose?.data?.news?.description);
+    setHeading(respose?.data?.news?.heading);
+    setSubHeading(respose?.data?.news?.sub_heading);
+    setURL(respose?.data?.news?.main_pic);
+  }, [respose]);
+
+  // console.log(respose)
 
   const toast = useToast();
 
@@ -91,6 +107,22 @@ const EditNews = (props: Props) => {
     }
   };
 
+  if (respose.status === 'fetching') {
+    return (
+      <DashboardLayout>
+        <div className="py-8 max-w-7xl mx-auto w-full">
+          <div className="bg-white rounded md:p-8 p-4 mx-auto">
+            <p className="text-gray-700 text-lg font-semibold text-center">
+              Edit current news post
+            </p>
+
+            <FetchLoading />
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
   return (
     <DashboardLayout>
       <div className="py-8 max-w-7xl mx-auto w-full">
@@ -125,6 +157,7 @@ const EditNews = (props: Props) => {
                           <input
                             type="text"
                             name="username"
+                            value={heading}
                             onChange={(e) => setHeading(e.target.value)}
                             id="first-name"
                             autoComplete="first-name"
@@ -146,6 +179,7 @@ const EditNews = (props: Props) => {
                           <input
                             type="text"
                             name="username"
+                            value={sub_heading}
                             onChange={(e) => setSubHeading(e.target.value)}
                             id="last-name"
                             autoComplete="last-name"
@@ -181,8 +215,30 @@ const EditNews = (props: Props) => {
                       {upload_started ? (
                         <Fragment>
                           {url ? (
-                            <div className="mt-1 sm:mt-0 sm:col-span-2 flex flex-col w-full">
-                              <img src={url} alt="" className="h-96 w-96" />
+                            <div className="mt-1 sm:mt-0 sm:col-span-2 flex flex-col w-full rounded relative overflow-hidden">
+                              <div className="flex flex-row items-center absolute right-4 top-4 space-x-2">
+                                <span className="bg-white rounded-full  cursor-pointer p-2 text-red-500">
+                                  <TrashIcon height={20} width={20} />
+                                </span>
+                                <span className="cursor-pointer bg-white rounded-full">
+                                  <div className="flex">
+                                  <label
+                                    htmlFor="formFile"
+                                    className="inline-block  rounded-full   p-2 text-blue-500"
+                                  >
+                                    <CameraIcon height={20} width={20} />
+                                  </label>
+                                  </div>
+                                  <input
+                                    className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
+                                    type="file"
+                                    style={{ display: 'none' }}
+                                    onChange={on_picture_select}
+                                    id="formFile"
+                                  />
+                                </span>
+                              </div>
+                              <img src={url} alt="" className="object-cover" />
                             </div>
                           ) : (
                             <div className="mt-1 sm:mt-0 sm:col-span-2 flex flex-col w-full">
@@ -226,7 +282,7 @@ const EditNews = (props: Props) => {
             <BlueButton
               onClick={edit_news}
               loading={loading}
-              text={'Create Post'}
+              text={'Edit Post'}
             />
           </div>
         </div>

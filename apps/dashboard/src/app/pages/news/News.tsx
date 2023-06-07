@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
-import cattle_breeding from '../../../assets/cattle-breeding.jpg';
 import VerticalNewsItem from '../../components/news-items/VerticalNewsItem';
 import { useEffect, useState } from 'react';
 import { apiUrl } from '../../utils/apiUrl';
@@ -50,51 +49,6 @@ const News = (props: Props) => {
       </DashboardLayout>
     );
   }
-
-  const newsData = [
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-    {
-      picture: cattle_breeding,
-      details:
-        ' We have been making a lot of sanitizers lately. We are supplying in batches',
-      date: 'March 12, 2022',
-    },
-  ];
 
   return (
     <DashboardLayout>
