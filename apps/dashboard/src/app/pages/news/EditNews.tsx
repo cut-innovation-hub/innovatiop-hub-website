@@ -83,14 +83,14 @@ const EditNews = (props: Props) => {
   const edit_news = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.post(`${apiUrl}/news/create`, {
+      const { data } = await axios.patch(`${apiUrl}/news/edit`, {
         heading,
         sub_heading,
         main_pic: url,
         description,
       });
       toast({
-        title: 'Post created.',
+        title: 'Success.',
         description: getMessage(data),
         status: 'success',
         duration: 9000,
@@ -100,7 +100,7 @@ const EditNews = (props: Props) => {
     } catch (error: any) {
       setLoading(false);
       toast({
-        title: 'Failed to post.',
+        title: 'Failed to edit.',
         description: getMessage(error),
         status: 'error',
         duration: 9000,
