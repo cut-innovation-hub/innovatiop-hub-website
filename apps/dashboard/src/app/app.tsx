@@ -13,6 +13,7 @@ import FAQS from './pages/paqs/FAQS';
 import Settings from './pages/settings/Settings';
 import Team from './pages/team/Team';
 import Mail from './pages/mail/Mail';
+import EditNews from './pages/news/EditNews';
 
 export function App() {
   return (
@@ -32,6 +33,10 @@ export function App() {
       <Route
         path="/dashboard/news"
         element={<AuthRoute Component={<News />} />}
+      />
+      <Route
+        path="/dashboard/edit-news"
+        element={<AuthRoute Component={<EditNews />} />}
       />
        <Route
         path="/dashboard/faqs"

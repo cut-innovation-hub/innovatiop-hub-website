@@ -20,9 +20,11 @@ interface NewsProps {
   date: any;
   news: string;
   picture: any;
+  _id: string
 }
 
-function VerticalNewsItem({ date, news, picture }: NewsProps) {
+function VerticalNewsItem({ date, news, picture, _id }: NewsProps) {
+  const navigate = useNavigate()
   return (
     <div>
       <div className="flex flex-col space-y-2 bg-white rounded-xl">
@@ -41,10 +43,7 @@ function VerticalNewsItem({ date, news, picture }: NewsProps) {
             {news}
           </Text>
           <div className="flex flex-row  self-end space-x-4 items-center">
-            <span className="flex flex-row items-center gap-1 text-slate-500 hover:text-primary-original cursor-pointer">
-              <p className="text-sm self-end ">Read More</p>
-              <ChevronDoubleRightIcon height={12} width={12} className="" />
-            </span>
+           
             <div className="flex">
               <Menu>
                 <MenuButton className="rounded-full p-2 hover:bg-slate-100">
@@ -53,6 +52,9 @@ function VerticalNewsItem({ date, news, picture }: NewsProps) {
                   </span>
                 </MenuButton>
                 <MenuList>
+                  <MenuItem onClick={() => navigate(`/dashboard/edit-news/?id=${_id}`)}>Edit</MenuItem>
+                  <MenuItem>View</MenuItem>
+                  <MenuDivider />
                   <MenuItem>Publish</MenuItem>
                   <MenuItem>make headline</MenuItem>
                   <MenuItem>Hide from blog</MenuItem>

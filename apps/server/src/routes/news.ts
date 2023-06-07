@@ -35,9 +35,13 @@ router.post('/create', (req, res, next) => {
 
 // get single news
 // get request
-router.get('/single', (req, res, next) => {
+router.get('/single',async (req, res, next) => {
   try {
-    console.log('get single news');
+    const {id} = req.query
+    const news = await News.findOne({_id: id})
+
+    return res.status(200).send({message: 'News item found', news: news})
+
   } catch (error) {
     next(error);
   }
