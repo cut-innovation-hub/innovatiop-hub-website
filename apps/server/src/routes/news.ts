@@ -3,6 +3,7 @@
 import express from 'express';
 import { News } from '../models/News';
 import { Headline } from '../models/news/Headline';
+import { Topstory } from '../models/news/Topstory';
 const router = express.Router();
 
 // create news
@@ -139,31 +140,56 @@ router.patch('/edit', async (req, res, next) => {
 router.post('/make-headline', async (req, res, next) => {
   try {
     const { id } = req.body;
+    const _headline = await Headline.findOne({ _id: id })
+      .sort({ createdAt: -1 })
+      .limit(1);
+    if (_headline._id.toString() === id) {
+      return res.status(400).send({ message: 'News already headline' });
+    }
     const newHeadline = new Headline({
       news_id: id,
     });
     const savedHeadline = await newHeadline.save();
-    return res.status(200).send({ message: 'News made headline', headline: savedHeadline });
-    
+    return res
+      .status(200)
+      .send({ message: 'News made headline', headline: savedHeadline });
   } catch (error) {
     next(error);
   }
 });
 
 // get headline news
-router.get('/headline', async (req, res, next)=>{
+router.get('/headline', async (req, res, next) => {
   try {
-    const headline = await Headline.findOne().sort({createdAt: -1}).limit(1)
-    if(!headline){
-      return res.status(404).send({message: 'No headline news found'})
+    const headline = await Headline.findOne().sort({ createdAt: -1 }).limit(1);
+    if (!headline) {
+      return res.status(404).send({ message: 'No headline news found' });
     }
     // console.log(headline)
-    const headLineNews = await News.findOne({_id: headline.news_id})
+    const headLineNews = await News.findOne({ _id: headline.news_id });
 
-    return res.status(200).send({message: 'Headline news found', headline: headLineNews})
+    return res
+      .status(200)
+      .send({ message: 'Headline news found', headline: headLineNews });
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
+
+// make top story
+router.post('/top-story', async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    const newTopStory = new Topstory({
+      news_id: id,
+    });
+    const savedTopStory = await newTopStory.save();
+    return res
+      .status(200)
+      .send({ message: 'News made top story', headline: savedTopStory });
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;
