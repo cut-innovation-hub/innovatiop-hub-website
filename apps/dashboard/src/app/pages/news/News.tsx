@@ -16,12 +16,12 @@ const News = (props: Props) => {
   const url = `${apiUrl}/news/all`;
   const response = useFetch(url);
 
-  // console.log(response);
-
+  
   useEffect(() => {
     setNews(response?.data?.news);
   }, [response]);
-
+  
+  console.log(news);
   if (response.status === 'fetching') {
     return (
       <DashboardLayout>

@@ -69,14 +69,14 @@ function VerticalNewsItem({ date, news, picture, _id }: NewsProps) {
       <div className="flex flex-col space-y-2 bg-white rounded-xl">
         <Link
           to="/dashboard/single-news"
-          className="relative img h-40 w-full rounded-t-lg overflow-hidden bg-slate-100 "
+          className="relative img h-40 w-full rounded-t-lg overflow-hidden bg-slate-200 "
         >
-          <img src={picture} alt="News-Pic" className="object-cover" />
+          <img src={picture} alt="News-Pic" className="object-contain w-full h-full" />
         </Link>
         <div className="flex flex-col p-4 ">
           <p className="text-xs text-slate-500">{date}</p>
           <Text
-            noOfLines={3}
+            noOfLines={2}
             className=" font-semibold text-lg text-primary-original"
           >
             {news}
