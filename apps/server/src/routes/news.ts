@@ -157,7 +157,8 @@ router.get('/headline', async (req, res, next)=>{
     if(!headline){
       return res.status(404).send({message: 'No headline news found'})
     }
-    const headLineNews = await News.findOne({_id: headline._id})
+    // console.log(headline)
+    const headLineNews = await News.findOne({_id: headline.news_id})
 
     return res.status(200).send({message: 'Headline news found', headline: headLineNews})
   } catch (error) {
