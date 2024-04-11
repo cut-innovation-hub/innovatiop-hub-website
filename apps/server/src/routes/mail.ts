@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import express from 'express';
 import { Mail } from '../models/Mail';
-import { transporter } from '../utils/mailer';
+// import { transporter } from '../utils/mailer';
 const router = express.Router();
 
 // create a mail
